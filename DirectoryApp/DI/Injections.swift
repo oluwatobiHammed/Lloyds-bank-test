@@ -11,7 +11,7 @@ import SwinjectStoryboard
 
 extension SwinjectStoryboard {
     public static func setup() {
-        ContentInjections.setup(container: defaultContainer)
+        ContentListInjections.setup(container: defaultContainer)
         ContentInjections.setup(container: defaultContainer)
         Container.loggingFunction = nil
     }

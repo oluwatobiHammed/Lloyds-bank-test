@@ -10,19 +10,18 @@ import RxSwift
 import RxCocoa
 
 
-class ContentListViewController: BaseViewController, UIScrollViewDelegate, UITableViewDelegate {
+class ContentListViewController: BaseViewController {
     var validateDisposable: Disposable?
     @IBOutlet weak var tableview: UITableView!
     var contentViewModel: IContentListViewModel?
     override func getViewModel() -> BaseViewModel {
-        return self.contentViewModel as! BaseViewModel 
+        return contentViewModel as! BaseViewModel 
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getPeople()
-        tableview.rx.setDelegate(self).dispose()
         tableview.separatorStyle = .none
         tableview.register(UINib(nibName: ContentListTableViewCell.Identifier, bundle: nil), forCellReuseIdentifier:  ContentListTableViewCell.Identifier)
         contentViewModel?.getContentList()
