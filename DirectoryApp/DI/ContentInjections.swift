@@ -1,5 +1,5 @@
 //
-//  PeopleInjections.swift
+//  RoomInjections.swift
 //  DirectoryApp
 //
 //  Created by Oladipupo Oluwatobi on 08/07/2021.
@@ -11,31 +11,29 @@ import SwinjectStoryboard
 
 class ContentInjections {
     static func setup(container: Container) {
-        container.register(BaseNetWorkProtocol.self) { _ in
+        container.register(BaseNetWorkProtocol.self) { res in
             BaseNetWorkServices() }
         container.register(VMRouteProtocol.self) { res in
-            VMRoute(baseNetwork: res.resolve(BaseNetWorkProtocol.self)!) }
-        container.register(IContentListRepo.self) { res in
-            ContentListRepoImpl(vmRouteProtocol: res.resolve(VMRouteProtocol.self)!)
+            VMRoute(baseNetwork: res.resolve(BaseNetWorkProtocol.self)!)
         }
-        container.register(ContentRepoImpl.self) { res in
+        container.register(IContentRepo.self) { res in
             ContentRepoImpl(vmRouteProtocol: res.resolve(VMRouteProtocol.self)!)
         }
-        container.register(IContentListViewModel.self) { res in
-            ContentListViewModel(contentRepo: res.resolve(IContentListRepo.self)!)
+        container.register(IContentViewModel.self) { res in
+            ContentViewModel(contentRepo: res.resolve(IContentRepo.self)!)
         }
-        container.register(ContentListViewModel.self) { res in
-            ContentListViewModel(contentRepo: res.resolve(IContentListRepo.self)!)
+        container.register(ContentViewModel.self) { res in
+            ContentViewModel(contentRepo: res.resolve(IContentRepo.self)!)
         }
         
         
         // MARK: - Storyboard
-        container.storyboardInitCompleted(ContentListViewController.self) { (res, cntrl) in
-            cntrl.contentViewModel = res.resolve(IContentListViewModel.self)
+        container.storyboardInitCompleted(ContentViewController.self) { (res, cntrl) in
+            cntrl.contentViewModel = res.resolve(IContentViewModel.self)
         }
         
-        container.storyboardInitCompleted(ContentListViewController.self) { (res, cntrl) in
-            cntrl.contentViewModel = res.resolve(ContentListViewModel.self)
+        container.storyboardInitCompleted(ContentViewController.self) { (res, cntrl) in
+            cntrl.contentViewModel = res.resolve(ContentViewModel.self)
         }
         
       
